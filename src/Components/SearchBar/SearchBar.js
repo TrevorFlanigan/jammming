@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 import "./SearchBar.css";
 class SearchBar extends React.Component {
   constructor(props) {
@@ -6,6 +6,8 @@ class SearchBar extends React.Component {
 
     this.search = this.search.bind(this);
     this.handleTermChange = this.handleTermChange.bind(this);
+    this.handleEnter = this.handleEnter.bind(this);
+    this.authorize = this.authorize.bind(this);
   }
 
   handleTermChange(event) {
@@ -18,20 +20,41 @@ class SearchBar extends React.Component {
       this.props.onSearch(this.state.searchTerm);
     }
   }
-  render() {
-    return ( <
-      div className = "SearchBar" >
-      <
-      input placeholder = "Enter A Song, Album, or Artist"
-      onChange = {
-        this.handleTermChange
+  authorize() {
+    this.props.authorize();
+  }
+
+  handleEnter() {
+    const listener = event => {
+      if (event.code === "Enter" || event.code === "NumpadEnter") {
+        this.search();
       }
-      /> <
-      button className = "SearchButton"
-      onClick = {
-        this.search
-      } > SEARCH < /button> <
-      /div>
+    };
+    document.addEventListener("keydown", listener);
+    return () => {
+      document.removeEventListener("keydown", listener);
+    };
+  }
+
+  render() {
+    let searchButton;
+
+    searchButton = (
+      <button className="SearchButton" onClick={this.search}>
+        {" "}
+        SEARCH{" "}
+      </button>
+    );
+
+    return (
+      <div className="SearchBar">
+        <input
+          placeholder="Enter A Song, Album, or Artist"
+          onChange={this.handleTermChange}
+          onKeyDown={this.handleEnter}
+        />{" "}
+        {searchButton}
+      </div>
     );
   }
 }
