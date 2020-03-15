@@ -1,7 +1,7 @@
 let accessToken;
 let expiresIn;
 const clientId = "84499fa9ae194cc4a8c491974170f497";
-const redirectURI = "http://tunedigga.surge.sh/";
+const redirectURI = "http://trevjammming.surge.sh/";
 // const redirectURI = "http://false-nose.surge.sh/";
 
 let Spotify = {
